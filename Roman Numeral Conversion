@@ -1,12 +1,27 @@
-roman_map = {
-    "I":1,
-    "V":5,
-    "X":10,
-    "L":50,
-    "c":100,
-    "D":500,
-    "M":1000
-}
-total = 0
-for i in range(len(roman)):
-    value = roman_map[roman[i]]
+def roman_to_int(roman):
+# defining the values of each roman numeral in the form of a 'dictionary' 
+    roman_map = {
+        "I":1,
+        "V":5,
+        "X":10,
+        "L":50,
+        "C":100,
+        "D":500,
+        "M":1000
+    }
+    total = 0
+    for i in range(len(roman)):
+        value = roman_map[roman[i]]
+            # Is there a "next character"? And is this value smaller?
+            
+        if i+1 < len(roman) and value < roman_map[roman[i+1]]: #This checks: is the current value smaller than the next value?
+            total -= value #if yes, subtract the small value from the big value
+        else:
+            total += value #if not, add the values
+    return total # <-- return at the end, not indented inside the loop!
+
+# test cases
+print(roman_to_int('IX')) #9
+print(roman_to_int('XIV')) #14
+print(roman_to_int('MCM')) #1900
+        
