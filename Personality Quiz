@@ -1,0 +1,36 @@
+# this is a personality quiz program 
+# there will be multiple questuons asked and at the end you will get your result
+# We will need:
+# Variables to keep score for every personality type for Example: extrovert_score = 0, introvert_score = 0
+# Multiple questions: each ansswer adds to the score Example: extrovert_score += 1, introvert_score += 1
+# Final comparison at the end -> whichever score is higher = the result 
+print("Welcome to the Personality Quiz!")
+extro_score = 0
+intro_score = 0 
+
+# Question 1
+answer1 = input("Do you prefer day or night?  ")
+if answer1.lower() == "day":
+    extro_score =+ 1
+elif answer1.lower() == "night":
+    intro_score =+ 1
+    
+# Question 2
+answer2= input("Do you like parties or staying home?  ")
+if answer2.lower() == "parties":
+    extro_score =+ 1
+elif answer1.lower() == "home" or "staying home":
+    intro_score =+ 1 
+# Question 3 
+answer3 = input("Do you like reading books or watching movies?  ")
+if answer3.lower() == "movies":
+    extro_score=+ 1 
+elif answer3.lower() == "books":
+    intro_score =+ 1 
+
+if extro_score > intro_score:
+    print("You seem more like an Extrovert!")
+elif intro_score > extro_score:
+    print("You seem more like an Introvert!")
+else: 
+    print("You're an ambivert - a mix of both, an introvert and an extrovert!")
