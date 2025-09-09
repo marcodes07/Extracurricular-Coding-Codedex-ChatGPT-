@@ -1,1 +1,51 @@
+# Let's make a To-Do List Manager
+# This will teach you loops, lists (to store tasks), conditionals (for menu choices), and functions (so your code is neat and reusable)
+# A menu is a list of choices the user can see so they know what the program can do
+# It's the perfect stepping stone before graphics, GUIs, and GIFs
+# This program will let the user: add tasks, view all tasks, remove tasks and quit
+# ^^^ The tasks the program can perform are a part of the menu 
+# We’ll keep a list in Python that stores all the tasks
+# We’ll use a loop so the menu keeps showing until the user chooses “Quit"
+# Each menu option will be handled with an if/elif/else.
 
+# Let's get started with the code then! 
+# ChatGPT gave me blanks so the whole code is written by me and it.
+# From lime 32, I pretty much wrote it myself. 
+
+tasks = [] #start with an empty list 
+
+while True: # this makes the loop continuous until the user quits
+    print("\nTo-Do List Manager")
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Remove Task")
+    print("4. Quit")
+    
+    choice = input("Choose an option (1-4):  ")
+
+    if choice == "1": 
+       # TODO: get a task from the user and add it to the list 
+        task = input("Please enter a new task:  ")
+        tasks.append(task) # Append is a method to put something at the end of/in a list 
+        print("Task added!")
+    
+    elif choice == "2": # using elif instead of making 4 separate if loops
+         if not tasks: 
+             print("No tasks yet!")
+         else: 
+             for index, task in enumerate(tasks, start=1): # enumerate displays all the tasks out by their number eg. 1. do hw 2. laundry etc. 
+                print(index,task)
+                
+    elif choice == "3":
+        if not tasks: print("No tasks to remove!")
+        else: 
+            for index, task in enumerate(tasks, start=1): # for loop goes thru all the tasks
+                print(index,task)
+                
+            remove_index = int(input("Whcih task would you like to remove?  "))
+            tasks.pop(remove_index - 1) # pop is a function that removes elements
+            print("Task removed! ")
+            
+    elif choice == "4":
+        print("Goodbye!")
+        break # break quits the loop and thus the program stops
