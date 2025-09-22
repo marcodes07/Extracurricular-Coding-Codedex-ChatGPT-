@@ -1,0 +1,52 @@
+# Spin on the To-Do List Manager 
+# Let's make a calculator! The functions of this basic calculator include +, -, * and /. 
+# This calculator will also be able to show the results in float format, which means decimal values are supported
+# We start off with a menu, just like our to-do list manager. It helps the user choose which function they want the calculator to perform. 
+
+# Let's get started with the code then! 
+# ChatGPT merely is ASSISTING me. No blanks, no code. I'm using my brain for this one
+
+tasks = [] # start with empty task list just like to do list menu 
+
+while True: 
+    print("\nCalculator")
+    print("1. + ")
+    print("2. - ")
+    print("3. * ")
+    print("4. / ")
+    print("5. Quit ")
+    
+    op = input("Choose an option (1-5): ")
+    
+    if op == "1": # op means operation 
+        # Add the numbers together 
+        a = float(input("Enter first number: ")) 
+        b = float(input("Enter second number: "))
+              # ^^ asking for the inputs individually and in all operations separately so that op 5 can run smoothly, otherwise is was making u input and then quitting. 
+        result = a + b
+        print(f"{a} + {b} = {result}")
+        
+    elif op == "2":
+        a = float(input("Enter first number: "))
+        b = float(input("Enter second number: "))
+        result = a - b 
+        print(f"{a} - {b} = {result}")
+        
+    elif op == "3":
+         a = float(input("Enter first number: "))
+         b = float(input("Enter second number: "))
+         result = a * b
+         print(f"{a} * {b} = {result}")
+         
+    elif op == "4":
+         a = float(input("Enter first number: "))
+         b = float(input("Enter second number: "))
+         result = a / b
+         print(f"{a} / {b} = {result}")
+    
+    elif op == "5":
+        print(" OFF ")
+        break # quits the calc
+    
+        
+    
