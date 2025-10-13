@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Candle Blow</title>
+<style>
+  body {
+    background: #ffeedf;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  h1 {
+    font-size: 2em;
+    color: #444;
+  }
+
+  #cake {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .candle {
+    width: 20px;
+    height: 80px;
+    background: #ff8a8a;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  .flame {
+    width: 10px;
+    height: 16px;
+    background: radial-gradient(ellipse at center, #ffdb5c 0%, #ff8c00 70%, transparent 100%);
+    border-radius: 50% 50% 50% 50%;
+    position: absolute;
+    top: -18px;
+    left: 5px;
+    animation: flicker 0.15s infinite alternate;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  @keyframes flicker {
+    0% { transform: scale(1) rotate(-3deg); opacity: 0.8; }
+    100% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+  }
+
+  .out .flame {
+    opacity: 0;
+  }
+
+  #status {
+    margin-top: 30px;
+    font-weight: 500;
+    color: #666;
+  }
+
+  button {
+    margin-top: 20px;
+    background: #ff7676;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h1>Blow Out the Candles 🎂</h1>
+  <div id="cake"></div>
+  <div id="status">Allow mic access and blow softly near it!</div>
+  <button id="restart">Restart</button>
+
+<script>
+const candleCount = 5;
+const cake = document.getElementById('cake');
+const statusText = document.getElementById('status');
+const restartBtn = document.getElementById('restart');
+
+// Generate candles
+for (let i = 0; i < candleCount; i++) {
+  const candle = document.createElement('div');
+  candle.classList.add('candle');
+  const flame = document.createElement('div');
+  flame.classList.add('flame');
+  candle.appendChild(flame);
+  cake.appendChild(candle);
+}
+
+// --- AUDIO DETECTION ---
+async function initMic() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioCtx = new AudioContext();
+    const source = audioCtx.createMediaStreamSource(stream);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
+    const data = new Uint8Array(analyser.fftSize);
+    source.connect(analyser);
+
+    function detectBlow() {
+      analyser.getByteTimeDomainData(data);
+      let rms = 0;
+      for (let i = 0; i < data.length; i++) {
+        const val = (data[i] - 128) / 128;
+        rms += val * val;
+      }
+      rms = Math.sqrt(rms / data.length);
+
+      if (rms > 0.08) { // threshold — tweak if too sensitive
+        blowOutNext();
+      }
+
+      requestAnimationFrame(detectBlow);
+    }
+
+    detectBlow();
+    statusText.textContent = "Listening... Blow to put out a candle!";
+  } catch (err) {
+    statusText.textContent = "Microphone access denied.";
+  }
+}
+
+function blowOutNext() {
+  const nextCandle = document.querySelector('.candle:not(.out)');
+  if (nextCandle) {
+    nextCandle.classList.add('out');
+  }
+}
+
+restartBtn.addEventListener('click', () => {
+  document.querySelectorAll('.candle').forEach(c => c.classList.remove('out'));
+  statusText.textContent = "Restarted! Blow again!";
+});
+
+initMic();
+</script>
+</body>
+</html>
